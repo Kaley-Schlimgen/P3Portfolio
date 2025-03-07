@@ -1,12 +1,45 @@
 package org.example;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class Main {
+    private static final Logger logger = Logger.getLogger(Main.class.getName());
+
     public static void main(String[] args) {
+        Thread firstThread = new Thread(new IncrementThread());
+        logger.setLevel(Level.INFO);
+
+        firstThread.start();
 
         System.out.println("Counting Up:");
 
+        try {
+            firstThread.join();
+        } catch (InterruptedException e) {
+                logger.log(Level.SEVERE, "Main thread error", e);
+        }
+
+        System.out.println("Counting Up Successful");
+    }
+}
+
+class IncrementThread implements Runnable {
+    private static final Logger logger = Logger.getLogger(IncrementThread.class.getName());
+
+    @Override
+    public void run() {
+        for (int i = 0; i <= 20; i++) {
+            System.out.println(i);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                logger.log(Level.WARNING, "Counting up thread error", e);
+            }
+        }
+    }
+}
+/*
         for (int i = 1; i <= 20; i++) {
             System.out.println(i);
         }
@@ -16,5 +49,4 @@ public class Main {
         for (int i = 20; i >= 1; --i) {
             System.out.println(i);
         }
-    }
-}
+    } */
