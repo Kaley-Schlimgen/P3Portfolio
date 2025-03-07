@@ -12,26 +12,25 @@ public class Main {
         logger.setLevel(Level.INFO);
 
         firstThread.start();
-        //secondThread.start();
 
-        System.out.println("Counting Up:");
+        System.out.println("First Thread Counting Up to 20:");
 
         try {
             firstThread.join();
-            System.out.println("Counting Up Successful");
+            System.out.println("Counting Up Thread Successful");
             System.out.println();
-            System.out.println("Counting Down:");
+            System.out.println("Second Thread Counting Down to 0:");
             secondThread.start();
         } catch (InterruptedException e) {
-                logger.log(Level.SEVERE, "Main thread error", e);
+                logger.log(Level.SEVERE, "Main Thread Error", e);
         }
 
         try {
             secondThread.join();
-            System.out.println("Counting Down Successful");
+            System.out.println("Counting Down Thread Successful");
         }
         catch (InterruptedException e) {
-            logger.log(Level.SEVERE, "Main thread error", e);
+            logger.log(Level.SEVERE, "Main Thread Error", e);
         }
 
         System.out.println("Both Successful");
@@ -43,12 +42,12 @@ class IncrementThread implements Runnable {
 
     @Override
     public void run() {
-        for (int i = 1; i <= 20; i++) {
+        for (int i = 0; i <= 20; i++) {
             System.out.println(i);
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
-                logger.log(Level.WARNING, "Counting up thread error", e);
+                logger.log(Level.WARNING, "Counting Up Thread Error", e);
             }
         }
     }
@@ -59,12 +58,12 @@ class DecrementThread implements Runnable {
 
     @Override
     public void run() {
-        for (int i = 20; i >= 1; i--) {
+        for (int i = 20; i >= 0; i--) {
             System.out.println(i);
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
-                logger.log(Level.WARNING, "Counting down thread error", e);
+                logger.log(Level.WARNING, "Counting Down Thread Error", e);
             }
         }
     }
