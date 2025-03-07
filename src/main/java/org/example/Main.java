@@ -12,18 +12,29 @@ public class Main {
         logger.setLevel(Level.INFO);
 
         firstThread.start();
-        secondThread.start();
+        //secondThread.start();
 
         System.out.println("Counting Up:");
 
         try {
             firstThread.join();
-            secondThread.join();
+            System.out.println("Counting Up Successful");
+            System.out.println();
+            System.out.println("Counting Down:");
+            secondThread.start();
         } catch (InterruptedException e) {
                 logger.log(Level.SEVERE, "Main thread error", e);
         }
 
-        System.out.println("Counting Up Successful");
+        try {
+            secondThread.join();
+            System.out.println("Counting Down Successful");
+        }
+        catch (InterruptedException e) {
+            logger.log(Level.SEVERE, "Main thread error", e);
+        }
+
+        System.out.println("Both Successful");
     }
 }
 
@@ -32,7 +43,7 @@ class IncrementThread implements Runnable {
 
     @Override
     public void run() {
-        for (int i = 0; i <= 20; i++) {
+        for (int i = 1; i <= 20; i++) {
             System.out.println(i);
             try {
                 Thread.sleep(100);
@@ -48,7 +59,7 @@ class DecrementThread implements Runnable {
 
     @Override
     public void run() {
-        for (int i = 20; i >= 0; i--) {
+        for (int i = 20; i >= 1; i--) {
             System.out.println(i);
             try {
                 Thread.sleep(100);
@@ -58,14 +69,3 @@ class DecrementThread implements Runnable {
         }
     }
 }
-/*
-        for (int i = 1; i <= 20; i++) {
-            System.out.println(i);
-        }
-
-        System.out.println("Counting Down:");
-
-        for (int i = 20; i >= 1; --i) {
-            System.out.println(i);
-        }
-    } */
